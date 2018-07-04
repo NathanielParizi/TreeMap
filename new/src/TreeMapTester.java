@@ -12,7 +12,7 @@ public class TreeMapTester {
 	
 	  public static void main(String[] args)
 	  {
-
+		  
 		  TreeMap<String, Integer> treeMap = new TreeMap<>();
 		  Scanner scan = new Scanner(System.in);
 		  String name = null;	 

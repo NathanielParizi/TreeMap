@@ -81,8 +81,20 @@ public class EquationBinaryTree {
 		}
 	}
 	
-	//**************************************************POSTFIX POPULATE
-//	Character.isLetter(ch)
+	//Determine whether char is operator to push into stack
+	public boolean isOperator(String temp)
+	{
+		if(temp.charAt(0) == '+' || temp.charAt(0) == '-' || temp.charAt(0) == '/' || temp.charAt(0) == '*')
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}		
+	}
+	
+	//**************************************************Postfix
 	
 	
 	
@@ -94,20 +106,41 @@ public class EquationBinaryTree {
 	private Node populateFromPostfixHelper(String posfix)  //outer most parenthesis
 	{
 		String[] parts = postfixSplitter(posfix);//0 = left, 1 = middle, 2 = right
-		Node item = new Node(parts[0]);
 		
-	//	System.out.println( parts[2]);
+		for(String s : parts) 
+		{
+			
+			System.out.println("Parts: " + s);
+			
+		}
 		
-		if(parts[0].length() > 0)
-			item.left = populateFromPostfixHelper(parts[0]);
-		if(parts[2].length() > 0)
-			item.right = populateFromPostfixHelper(parts[2]);
-		return item;
+		Node temp = new Node(parts[0]);
+		System.out.println(temp.data.substring(0));
+		
+		if(parts[2].length() == 1)
+			temp.left = new Node(parts[2].substring(0));
+		else
+			temp.left = populateFromPostfixHelper(parts[2]);
+		
+		if(parts[1].length() == 1)
+			temp.right = new Node(parts[1].substring(0));
+		else
+			temp.right = populateFromPostfixHelper(parts[1]);
+		
+		return temp;
+		
+		
+//		
+//		Node item = new Node(parts[1]);
+//		if(parts[0].length() > 0)
+//			item.left = populateFromPostfixHelper(parts[0]);
+//		if(parts[2].length() > 0)
+//			item.right = populateFromPostfixHelper(parts[2]);
+//		return item;
 		
 		//abc*+de*f+g*+
 	}
 	
-	//***********************************************POSTFIX splitter
 	
 	private String[] postfixSplitter(String posfix)
 	{
@@ -132,25 +165,34 @@ public class EquationBinaryTree {
 			//abc*+de*f+g*+	
 			
 			
+			
 			temp[0] = posfix.substring(0, i+1);
 			System.out.print("temp[0]::   " + posfix.substring(0,i+1) + "\t");
+
+//			System.out.println("WHAT???!:  " + temp[0].charAt(0));
+//			if(!isOperator(temp[0])) {
+//				System.out.println("**********TRYEEE\n\n");
+//				}
+			
+			
+			
 			temp[1] = ""+posfix.charAt(i+1);
-			System.out.print("temp[1]::   " + posfix.substring(i+1)+ "\t");
+			System.out.print("temp[1]::   " + posfix.charAt(i+1)+ "\t");
+			
+			
 			temp[2] = posfix.substring(i+2);
 			System.out.print("temp[2]::   " + posfix.substring(i+2)+ "\t");
 			System.out.println();;
-			/*
-			System.out.println(infix.substring(0, i+1));//left point
-			System.out.println(infix.charAt(i+1));//middle point
-			System.out.println(infix.substring(i+2));//right point
-			System.out.println(infix + ":" + i);
-			*/
+			
+
+			
+			
 		}
 		else
 		{
-			temp[0] = "";
-			temp[1] = posfix;
-			temp[2] = "";
+			temp[2] = "" + posfix.charAt(0); //left
+			temp[1] = "" + posfix.charAt(1); //middle
+			temp[0] = ""; posfix.charAt(2); //right (operator)
 		}
 		return temp;
 	}
@@ -221,6 +263,8 @@ public class EquationBinaryTree {
 		}
 		return temp;
 	}
+	
+
 
 	private class Node
 	{
