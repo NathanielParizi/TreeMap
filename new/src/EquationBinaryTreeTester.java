@@ -21,7 +21,7 @@ public class EquationBinaryTreeTester {
 //		ebt.printPrefix();
 
 		System.out.println();
-		ebt.populateFromInfix("((a+(b*c))+(((d*e)+f)*g))");
+	//	ebt.populateFromInfix("((a+(b*c))+(((d*e)+f)*g))");
 		ebt.populateFromPostfix("((a+(b*c))+(((d*e)+f)*g))");
 		System.out.println("**********************************");
 		ebt.printInfix();

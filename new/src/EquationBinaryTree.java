@@ -1,4 +1,5 @@
 
+
 public class EquationBinaryTree {
 	private Node root;
 
@@ -81,62 +82,33 @@ public class EquationBinaryTree {
 		}
 	}
 	
-	//Determine whether char is operator to push into stack
-	public boolean isOperator(String temp)
-	{
-		if(temp.charAt(0) == '+' || temp.charAt(0) == '-' || temp.charAt(0) == '/' || temp.charAt(0) == '*')
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}		
-	}
 	
-	//**************************************************Postfix
-	
-	
+	//**************************************************
+	// Postfix
+	//*************************************************
 	
 	public void populateFromPostfix(String posfix)
 	{
 		root = populateFromPostfixHelper(posfix);
 	}
-	
 	private Node populateFromPostfixHelper(String posfix)  //outer most parenthesis
 	{
-		String[] parts = postfixSplitter(posfix);//0 = left, 1 = middle, 2 = right
-		
-		for(String s : parts) 
-		{
-			
+		String[] parts = postfixSplitter(posfix);
+		for(String s : parts)
 			System.out.println("Parts: " + s);
-			
-		}
-		
-		Node temp = new Node(parts[0]);
-		System.out.println(temp.data.substring(0));
-		
+		Node temp = new Node(parts[0].substring(0));
 		if(parts[2].length() == 1)
 			temp.left = new Node(parts[2].substring(0));
 		else
 			temp.left = populateFromPostfixHelper(parts[2]);
-		
+
 		if(parts[1].length() == 1)
 			temp.right = new Node(parts[1].substring(0));
 		else
 			temp.right = populateFromPostfixHelper(parts[1]);
-		
 		return temp;
+	
 		
-		
-//		
-//		Node item = new Node(parts[1]);
-//		if(parts[0].length() > 0)
-//			item.left = populateFromPostfixHelper(parts[0]);
-//		if(parts[2].length() > 0)
-//			item.right = populateFromPostfixHelper(parts[2]);
-//		return item;
 		
 		//abc*+de*f+g*+
 	}
@@ -144,11 +116,14 @@ public class EquationBinaryTree {
 	
 	private String[] postfixSplitter(String posfix)
 	{
+
+		System.out.println("Post: " + posfix);
 		String[] temp = new String[3];
-		if(posfix.length() > 1) //if infix has values
-		{
-			
-			
+		
+		
+		
+		if(posfix.length() > 1) //if posfix has values
+		{						
 			posfix = posfix.substring(1, posfix.length()-1);//remove outer parenthesis 
 			int parenCount = 0;
 			int i;
@@ -160,46 +135,37 @@ public class EquationBinaryTree {
 					parenCount--;
 				if(parenCount == 0)
 					break;
-			}
-			
-			//abc*+de*f+g*+	
-			
-			
-			
+			}		
+	
 			temp[0] = posfix.substring(0, i+1);
-			System.out.print("temp[0]::   " + posfix.substring(0,i+1) + "\t");
-
-//			System.out.println("WHAT???!:  " + temp[0].charAt(0));
-//			if(!isOperator(temp[0])) {
-//				System.out.println("**********TRYEEE\n\n");
-//				}
-			
+	//		System.out.print("temp[0]::   " + posfix.substring(0,i+1)+ "\t");
 			
 			
 			temp[1] = ""+posfix.charAt(i+1);
-			System.out.print("temp[1]::   " + posfix.charAt(i+1)+ "\t");
-			
-			
+	//			System.out.print("temp[1]::   " + posfix.charAt(i+1)+ "\t");
+								
+				
 			temp[2] = posfix.substring(i+2);
-			System.out.print("temp[2]::   " + posfix.substring(i+2)+ "\t");
-			System.out.println();;
-			
-
-			
+	//		System.out.print("temp[2]::   " + posfix.substring(i+2)+ "\t");		
 			
 		}
 		else
 		{
-			temp[2] = "" + posfix.charAt(0); //left
-			temp[1] = "" + posfix.charAt(1); //middle
-			temp[0] = ""; posfix.charAt(2); //right (operator)
+			temp[0] = "";
+			temp[1] = posfix;
+			temp[2] = "";
+		
 		}
+	
+		
 		return temp;
 	}
 	
+	//abc*+de*f+g*+	
+	
 	//******************************************************
 
-	//++a*bc*+*defg
+	
 	public void populateFromPrefix(String prefix)
 	{
 
@@ -215,6 +181,8 @@ public class EquationBinaryTree {
 	}
 
 	private Node populateFromInfixHelper(String infix)
+	
+	
 	{
 		String[] parts = infixSplitter(infix);//0 = left, 1 = middle, 2 = right
 		Node item = new Node(parts[1]);
@@ -262,6 +230,8 @@ public class EquationBinaryTree {
 			temp[2] = "";
 		}
 		return temp;
+		
+		//++a*bc*+*defg
 	}
 	
 
@@ -276,5 +246,18 @@ public class EquationBinaryTree {
 			left = null;
 			right = null;
 		}
+	}
+	
+	//Determine whether char is operator
+	public boolean isOperator(String temp)
+	{
+		if(temp.charAt(0) == '+' || temp.charAt(0) == '-' || temp.charAt(0) == '/' || temp.charAt(0) == '*')
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}		
 	}
 }
